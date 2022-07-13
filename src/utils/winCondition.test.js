@@ -7,7 +7,7 @@ describe("hasReachedWinCondition", () => {
       [null, null, null],
       [null, null, null],
     ];
-    expect(hasReachedWinCondition(board)).toBe(false);
+    expect(hasReachedWinCondition(board)).toBe(null);
   });
 
   it("should return true if one row is full of same item", () => {
@@ -16,7 +16,7 @@ describe("hasReachedWinCondition", () => {
       ["O", "O", null],
       [null, null, "O"],
     ];
-    expect(hasReachedWinCondition(board)).toBe(true);
+    expect(hasReachedWinCondition(board)).toBe("X");
   });
 
   it("should return true if column is complete", () => {
@@ -25,7 +25,7 @@ describe("hasReachedWinCondition", () => {
       ["X", "O", null],
       ["X", null, "O"],
     ];
-    expect(hasReachedWinCondition(board)).toBe(true);
+    expect(hasReachedWinCondition(board)).toBe("X");
   });
 
   it("should return true if diagonal is complete", () => {
@@ -34,7 +34,7 @@ describe("hasReachedWinCondition", () => {
       [null, "X", "O"],
       [null, null, "X"],
     ];
-    expect(hasReachedWinCondition(board)).toBe(true);
+    expect(hasReachedWinCondition(board)).toBe("X");
   });
 
   it("should return true if reverse diagonal is complete", () => {
@@ -43,7 +43,7 @@ describe("hasReachedWinCondition", () => {
       [null, "O", "O"],
       ["O", null, "X"],
     ];
-    expect(hasReachedWinCondition(board)).toBe(true);
+    expect(hasReachedWinCondition(board)).toBe("O");
   });
 
   it("should return false if no win condition is met yet", () => {
@@ -52,7 +52,7 @@ describe("hasReachedWinCondition", () => {
       ["O", null, "X"],
       ["X", "O", null],
     ];
-    expect(hasReachedWinCondition(board)).toBe(false);
+    expect(hasReachedWinCondition(board)).toBe(null);
   });
 
   it("should return false if none win but the board is full", () => {
@@ -61,6 +61,6 @@ describe("hasReachedWinCondition", () => {
       ["O", "X", "X"],
       ["X", "O", "O"],
     ];
-    expect(hasReachedWinCondition(board)).toBe(false);
+    expect(hasReachedWinCondition(board)).toBe(null);
   });
 });

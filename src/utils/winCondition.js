@@ -1,10 +1,10 @@
 const hasReachedWinCondition = (board) => {
-  let hasWon = false;
+  let hasWon = null;
   // check if row is complete
   for (let i = 0; i < board.length; i++) {
     if (board[i].every((cell) => cell === board[i][0])) {
       if (board[i][0] !== null) {
-        hasWon = true;
+        hasWon = board[i][0];
       }
     }
   }
@@ -17,7 +17,7 @@ const hasReachedWinCondition = (board) => {
     }
     if (column.every((cell) => cell === column[0])) {
       if (column[0] !== null) {
-        hasWon = true;
+        hasWon = column[0];
       }
     }
   }
@@ -29,7 +29,7 @@ const hasReachedWinCondition = (board) => {
   }
   if (diagonal.every((cell) => cell === diagonal[0])) {
     if (diagonal[0] !== null) {
-      hasWon = true;
+      hasWon = diagonal[0];
     }
   }
 
@@ -40,7 +40,7 @@ const hasReachedWinCondition = (board) => {
   }
   if (reverseDiagonal.every((cell) => cell === reverseDiagonal[0])) {
     if (reverseDiagonal[0] !== null) {
-      hasWon = true;
+      hasWon = reverseDiagonal[0];
     }
   }
 
