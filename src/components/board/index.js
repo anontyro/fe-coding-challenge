@@ -2,6 +2,8 @@ import React from "react";
 import "./index.css";
 import { useSelector, useDispatch } from "react-redux";
 import { selectCell } from "../../store/actions/moves";
+import { checkWinner } from "../../store/actions/player";
+import { resetGame } from "../../store/actions/game";
 
 const BoardColumn = ({ column, columnIndex, handlePlay }) => {
   return (
@@ -33,10 +35,25 @@ export const Board = () => {
 
   const handlePlay = (currentPlayer) => (rowNumber, columnNumber) => {
     dispatch(selectCell(currentPlayer, rowNumber, columnNumber));
+    dispatch(checkWinner());
   };
 
   return (
     <div className="Board">
+      {game.winner && (
+        <>
+          <div className="game-winner-underlay"></div>
+          <div className="game-winner">
+            <div className="game-winner-title">Winner: {game.winner}</div>
+            <div
+              className="game-winner-action"
+              onClick={() => dispatch(resetGame())}
+            >
+              Play Again
+            </div>
+          </div>
+        </>
+      )}
       <div>Board:</div>
       <div className="game-board">
         {board.map((col, i) => (
@@ -59,7 +76,7 @@ export const Board = () => {
           )
         }
       >
-        Player {game.currentPlayer}
+        <div>Player {game.currentPlayer}</div>
       </div>
     </div>
   );
