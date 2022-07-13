@@ -1,3 +1,25 @@
 .Board {
   margin: auto;
+  padding: 2rem;
+}
+
+.game-board{
+  display: grid;
+  grid-template-columns: 5rem 5rem 5rem;
+  margin: auto;
+  width: 15rem;
+}
+
+.board-cell{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 5rem;
+  place-self: center;
+  border: 1px solid whitesmoke;
+}
+
+.board-cell:hover{
+  background-color: whitesmoke;
 }
