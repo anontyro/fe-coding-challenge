@@ -37,7 +37,7 @@ export const Board = () => {
 
   return (
     <div className="Board">
-      {/* Board: {JSON.stringify(board)} */}
+      <div>Board:</div>
       <div className="game-board">
         {board.map((col, i) => (
           <BoardColumn
