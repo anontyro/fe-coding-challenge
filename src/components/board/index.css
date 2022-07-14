@@ -57,3 +57,8 @@
 .board-cell:hover{
   background-color: whitesmoke;
 }
+
+.game-player{
+  text-align: center;
+  margin: 10px auto;
+}

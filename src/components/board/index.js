@@ -64,7 +64,7 @@ export const Board = () => {
           />
         ))}
       </div>
-      <div>Player {game.currentPlayer}</div>
+      <div className="game-player">Player {game.currentPlayer}</div>
     </div>
   );
 };
