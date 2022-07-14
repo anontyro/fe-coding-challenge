@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { Board } from ".";
 import configureStore from "../../store";
 import { Provider } from "react-redux";
+import { DEFAULT_CELL_TEXT } from "./boardColumn";
 
 test("renders Board text", () => {
   render(
@@ -25,11 +26,11 @@ test("renders the board correctly as empty on inital load", () => {
   const boardColumns = screen.getAllByTestId("board-cell");
   expect(boardColumns.length).toBe(9);
   boardColumns.forEach((cell) => {
-    expect(cell.textContent).toBe("click");
+    expect(cell.textContent).toBe(DEFAULT_CELL_TEXT);
   });
 });
 
-test("when a cell is clicked it should be filled with the current player's symbol", async () => {
+test("when a cell is clicked it should be filled with the current player's symbol", () => {
   render(
     <Provider store={configureStore()}>
       <Board />
@@ -38,37 +39,37 @@ test("when a cell is clicked it should be filled with the current player's symbo
   const boardColumns = screen.getAllByTestId("board-cell");
   const firstCell = boardColumns[0];
 
-  await fireEvent.click(firstCell);
+  fireEvent.click(firstCell);
 
   expect(screen.getAllByTestId("board-cell")[0].textContent).toBe("X");
 });
 
-it("when more than one cell is clicked player symbols will alternate", async () => {
+it("when more than one cell is clicked player symbols will alternate", () => {
   render(
     <Provider store={configureStore()}>
       <Board />
     </Provider>
   );
 
-  await fireEvent.click(screen.getAllByTestId("board-cell")[0]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[1]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[0]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[1]);
 
   expect(screen.getAllByTestId("board-cell")[0].textContent).toBe("X");
   expect(screen.getAllByTestId("board-cell")[1].textContent).toBe("O");
 });
 
-it("when a player wins the game the win screen is displayed", async () => {
+it("when a player wins the game the win screen is displayed", () => {
   render(
     <Provider store={configureStore()}>
       <Board />
     </Provider>
   );
 
-  await fireEvent.click(screen.getAllByTestId("board-cell")[0]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[4]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[1]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[5]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[2]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[0]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[4]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[1]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[5]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[2]);
 
   expect(screen.getByText("Winner: X")).toBeInTheDocument();
   expect(
@@ -76,21 +77,21 @@ it("when a player wins the game the win screen is displayed", async () => {
   ).toBeInTheDocument();
 });
 
-it("when the player wins and clicks the play again the board will reset", async () => {
+it("when the player wins and clicks the play again the board will reset", () => {
   render(
     <Provider store={configureStore()}>
       <Board />
     </Provider>
   );
 
-  await fireEvent.click(screen.getAllByTestId("board-cell")[0]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[4]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[1]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[5]);
-  await fireEvent.click(screen.getAllByTestId("board-cell")[2]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[0]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[4]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[1]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[5]);
+  fireEvent.click(screen.getAllByTestId("board-cell")[2]);
 
   const playAgain = screen.getByRole("button", { name: "Play Again" });
-  await fireEvent.click(playAgain);
+  fireEvent.click(playAgain);
 
   const winTextNoLongerPresent = screen.queryByText("Winner: X");
   expect(winTextNoLongerPresent).toBeNull();
@@ -101,6 +102,6 @@ it("when the player wins and clicks the play again the board will reset", async 
   expect(playAgainNotPresent).toBeNull();
 
   screen.getAllByTestId("board-cell").forEach((cell) => {
-    expect(cell.textContent).toBe("click");
+    expect(cell.textContent).toBe(DEFAULT_CELL_TEXT);
   });
 });

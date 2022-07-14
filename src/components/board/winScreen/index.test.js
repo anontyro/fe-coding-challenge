@@ -12,12 +12,12 @@ test("will correctly render out the win screen", () => {
   ).toBeInTheDocument();
 });
 
-test("will correctly fire the play again button when pressed", async () => {
+test("will correctly fire the play again button when pressed", () => {
   let pressed = 0;
   const winner = "X";
   const resetGame = () => pressed++;
   render(<WinScreen winner={winner} resetGame={resetGame} />);
 
-  await fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
+  fireEvent.click(screen.getByRole("button", { name: "Play Again" }));
   expect(pressed).toBe(1);
 });
