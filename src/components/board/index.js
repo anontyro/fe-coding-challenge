@@ -27,8 +27,6 @@ const BoardColumn = ({ column, columnIndex, handlePlay }) => {
 const selectBoard = (state) => state.board;
 const selectGame = (state) => state.game;
 
-const getRandomCell = (i) => Math.floor(Math.random() * i);
-
 export const Board = () => {
   const board = useSelector(selectBoard);
   const game = useSelector(selectGame);
@@ -46,12 +44,12 @@ export const Board = () => {
           <div className="game-winner-underlay"></div>
           <div className="game-winner">
             <div className="game-winner-title">Winner: {game.winner}</div>
-            <div
+            <button
               className="game-winner-action"
               onClick={() => dispatch(resetGame())}
             >
               Play Again
-            </div>
+            </button>
           </div>
         </>
       )}

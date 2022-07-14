@@ -56,3 +56,51 @@ it("when more than one cell is clicked player symbols will alternate", async () 
   expect(screen.getAllByTestId("board-cell")[0].textContent).toBe("X");
   expect(screen.getAllByTestId("board-cell")[1].textContent).toBe("O");
 });
+
+it("when a player wins the game the win screen is displayed", async () => {
+  render(
+    <Provider store={configureStore()}>
+      <Board />
+    </Provider>
+  );
+
+  await fireEvent.click(screen.getAllByTestId("board-cell")[0]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[4]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[1]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[5]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[2]);
+
+  expect(screen.getByText("Winner: X")).toBeInTheDocument();
+  expect(
+    screen.getByRole("button", { name: "Play Again" })
+  ).toBeInTheDocument();
+});
+
+it("when the player wins and clicks the play again the board will reset", async () => {
+  render(
+    <Provider store={configureStore()}>
+      <Board />
+    </Provider>
+  );
+
+  await fireEvent.click(screen.getAllByTestId("board-cell")[0]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[4]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[1]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[5]);
+  await fireEvent.click(screen.getAllByTestId("board-cell")[2]);
+
+  const playAgain = screen.getByRole("button", { name: "Play Again" });
+  await fireEvent.click(playAgain);
+
+  const winTextNoLongerPresent = screen.queryByText("Winner: X");
+  expect(winTextNoLongerPresent).toBeNull();
+
+  const playAgainNotPresent = screen.queryByRole("button", {
+    name: "Play Again",
+  });
+  expect(playAgainNotPresent).toBeNull();
+
+  screen.getAllByTestId("board-cell").forEach((cell) => {
+    expect(cell.textContent).toBe("click");
+  });
+});
