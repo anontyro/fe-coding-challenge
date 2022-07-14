@@ -7,7 +7,7 @@ const setWinner = (player) => ({
   player,
 });
 
-export const checkWinner = () => async (dispatch, getState) => {
+export const checkWinner = () => (dispatch, getState) => {
   const board = getState().board;
   const winner = hasReachedWinCondition(board);
   if (winner) {

@@ -13,6 +13,7 @@ const BoardColumn = ({ column, columnIndex, handlePlay }) => {
           <div
             key={cellIndex}
             className="board-cell"
+            data-testid="board-cell"
             onClick={() => handlePlay(columnIndex, cellIndex)}
           >
             <div className="board-cell-contents">{cell ?? "click"}</div>
@@ -65,19 +66,7 @@ export const Board = () => {
           />
         ))}
       </div>
-      <div
-        onClick={() =>
-          dispatch(
-            selectCell(
-              game.currentPlayer,
-              getRandomCell(board.length),
-              getRandomCell(board.length)
-            )
-          )
-        }
-      >
-        <div>Player {game.currentPlayer}</div>
-      </div>
+      <div>Player {game.currentPlayer}</div>
     </div>
   );
 };
