@@ -4,25 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectCell } from "../../store/actions/moves";
 import { checkWinner } from "../../store/actions/player";
 import { resetGame } from "../../store/actions/game";
-
-const BoardColumn = ({ column, columnIndex, handlePlay }) => {
-  return (
-    <div className="board-column">
-      {column.map((cell, cellIndex) => {
-        return (
-          <div
-            key={cellIndex}
-            className="board-cell"
-            data-testid="board-cell"
-            onClick={() => handlePlay(columnIndex, cellIndex)}
-          >
-            <div className="board-cell-contents">{cell ?? "click"}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import WinScreen from "./winScreen";
+import BoardColumn from "./boardColumn";
 
 const selectBoard = (state) => state.board;
 const selectGame = (state) => state.game;
@@ -40,18 +23,10 @@ export const Board = () => {
   return (
     <div className="Board">
       {game.winner && (
-        <>
-          <div className="game-winner-underlay"></div>
-          <div className="game-winner">
-            <div className="game-winner-title">Winner: {game.winner}</div>
-            <button
-              className="game-winner-action"
-              onClick={() => dispatch(resetGame())}
-            >
-              Play Again
-            </button>
-          </div>
-        </>
+        <WinScreen
+          winner={game.winner}
+          resetGame={() => dispatch(resetGame())}
+        />
       )}
       <div>Board:</div>
       <div className="game-board">
